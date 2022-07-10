@@ -7,6 +7,9 @@ public class car : MonoBehaviour
     public bool move;
     public Transform parent;
     public GameObject[] trails;
+    public GameManager _gameManager;
+    public bool stopPoint;
+    
     
     //
 
@@ -20,7 +23,11 @@ public class car : MonoBehaviour
     
     void Update()
     {
-        if(move == true)
+        if(!stopPoint)
+        {
+            transform.Translate(transform.forward * 4f * Time.deltaTime);
+        }
+        if(move)
         {
             transform.Translate(transform.forward * 15f * Time.deltaTime);
         }
@@ -35,11 +42,25 @@ public class car : MonoBehaviour
             transform.SetParent(parent);
             trails[0].SetActive(false);
             trails[1].SetActive(false);
+            _gameManager.bringNewCar();
+
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             
         }
-        if(other.gameObject.CompareTag("middle"))
+        else if(other.gameObject.CompareTag("stopper"))
         {
-            Destroy(gameObject); // later with obj pool,false
+            stopPoint = true;
+            _gameManager.stopTransform.SetActive(false);
+            
+        }
+        else if(other.gameObject.CompareTag("middle"))
+        {
+            Destroy(gameObject); // canvas + setActiveFalse
+        }
+
+        else if(other.gameObject.CompareTag("car"))
+        {
+            Destroy(gameObject); // canvas + setActiveFalse
         }
         
     }
