@@ -9,6 +9,7 @@ TagManager:
   - parking
   - car
   - stopper
+  - elmas
   layers:
   - Default
   - TransparentFX

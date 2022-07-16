@@ -56,11 +56,19 @@ public class car : MonoBehaviour
         else if(other.gameObject.CompareTag("middle"))
         {
             Destroy(gameObject); // canvas + setActiveFalse
+            _gameManager.Lost();
         }
 
         else if(other.gameObject.CompareTag("car"))
         {
-            Destroy(gameObject); // canvas + setActiveFalse
+            Destroy(gameObject); // canvas + setActiveFalse7
+            _gameManager.Lost();
+        }
+
+        else if(other.gameObject.CompareTag("elmas"))
+        {
+            _gameManager.DiamondNumber++;
+            other.gameObject.SetActive(false);
         }
         
     }
